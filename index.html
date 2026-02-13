@@ -78,7 +78,26 @@
             text-transform: uppercase;
             color: #ccc;
         }
+/* Botón de música */
+        .music-control {
+            position: absolute;
+            bottom: 30px;
+            background: rgba(255, 218, 121, 0.2);
+            border: 1px solid #ffda79;
+            color: #ffda79;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
 
+        .music-control:hover {
+            background: #ffda79;
+            color: #000;
+        }
         @media (max-width: 600px) {
             .header-text { font-size: 1.8rem; }
             .number { font-size: 2.5rem; }
@@ -109,6 +128,12 @@
                 <span class="number" id="seconds">00</span>
                 <span class="label">Seg</span>
             </div>
+            <audio id="audioPlayer" loop>
+            <source src="mi-vida-entera.mp3" type="audio/mpeg">
+        </audio>
+
+        <button class="music-control" onclick="toggleMusic()">🎵 PLAY MÚSICA</button>
+    </div>
         </div>
     </div>
 </div>
@@ -143,5 +168,6 @@
 </body>
 
 </html>
+
 
 
