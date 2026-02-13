@@ -9,23 +9,24 @@
         body, html {
             height: 100%;
             margin: 0;
-            font-family: 'Courier New', Courier, monospace; /* Fuente más "ticket de concierto" */
+            font-family: 'Courier New', Courier, monospace;
             color: white;
+            overflow: hidden;
         }
 
         .bg-image {
-            /* CAMBIA 'tu_foto_morat.jpg' POR EL NOMBRE DE TU ARCHIVO DE IMAGEN */
+            /* Asegúrate que el nombre de la imagen sea correcto */
             background-image: url('tu_foto_morat.jpeg');
             
             height: 100%;
             background-position: center;
-            background-repeat: repeat;
-            background-size: contain;
+            background-repeat: repeat; /* Tu preferencia de repetir */
+            background-size: contain;  /* Tu preferencia de contener */
             position: relative;
+            background-color: #050510; /* Fondo oscuro por si quedan huecos */
         }
 
         .overlay {
-            /* Un tinte más azulado/oscuro para estilo concierto */
             background-color: rgba(10, 10, 30, 0.7); 
             position: absolute;
             top: 0;
@@ -45,7 +46,7 @@
             margin-bottom: 2rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            color: #ffda79; /* Un color dorado/luz */
+            color: #ffda79;
             text-shadow: 0 0 10px rgba(255, 218, 121, 0.5);
             padding: 0 20px;
         }
@@ -55,10 +56,11 @@
             gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
+            margin-bottom: 30px; /* Espacio para el botón de abajo */
         }
 
         .time-box {
-            background: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+            background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             border-radius: 5px;
             min-width: 90px;
@@ -78,10 +80,10 @@
             text-transform: uppercase;
             color: #ccc;
         }
-/* Botón de música */
+
+        /* Botón de música */
         .music-control {
-            position: absolute;
-            bottom: 30px;
+            margin-top: 20px; /* Separación del contador */
             background: rgba(255, 218, 121, 0.2);
             border: 1px solid #ffda79;
             color: #ffda79;
@@ -98,6 +100,7 @@
             background: #ffda79;
             color: #000;
         }
+
         @media (max-width: 600px) {
             .header-text { font-size: 1.8rem; }
             .number { font-size: 2.5rem; }
@@ -128,19 +131,18 @@
                 <span class="number" id="seconds">00</span>
                 <span class="label">Seg</span>
             </div>
-            <audio id="audioPlayer" loop>
+        </div>
+
+        <audio id="audioPlayer" loop>
             <source src="mi-vida-entera.mp3" type="audio/mpeg">
         </audio>
 
         <button class="music-control" onclick="toggleMusic()">🎵 PLAY MÚSICA</button>
     </div>
-        </div>
-    </div>
 </div>
 
 <script>
-    // FECHA OBJETIVO: 24/09/2026 a las 21:00 HS Hora Argentina
-    // Mes 8 es Septiembre (Enero es 0)
+    // --- 1. LÓGICA DEL TEMPORIZADOR ---
     const targetDate = new Date(2026, 8, 24, 21, 0, 0).getTime();
 
     const timer = setInterval(function() {
@@ -163,11 +165,27 @@
         document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
         document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
     }, 1000);
+
+    // --- 2. LÓGICA DE LA MÚSICA (Esto es lo que faltaba) ---
+    const audio = document.getElementById("audioPlayer");
+    const btn = document.querySelector(".music-control");
+    let isPlaying = false;
+
+    function toggleMusic() {
+        if (isPlaying) {
+            audio.pause();
+            btn.innerHTML = "🎵 PLAY MÚSICA";
+            isPlaying = false;
+        } else {
+            audio.play().catch(function(error) {
+                console.log("Error al reproducir: ", error);
+                alert("No se pudo reproducir la música. Intenta interactuar con la página primero.");
+            });
+            btn.innerHTML = "⏸ PAUSAR MÚSICA";
+            isPlaying = true;
+        }
+    }
 </script>
 
 </body>
-
 </html>
-
-
-
