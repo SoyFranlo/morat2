@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva - Morat</title>
+    <style>
+        /* ESTILOS VISUALES */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace; /* Fuente más "ticket de concierto" */
+            color: white;
+        }
+
+        .bg-image {
+            /* CAMBIA 'tu_foto_morat.jpg' POR EL NOMBRE DE TU ARCHIVO DE IMAGEN */
+            background-image: url('tu_foto_morat.jpg');
+            
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .overlay {
+            /* Un tinte más azulado/oscuro para estilo concierto */
+            background-color: rgba(10, 10, 30, 0.7); 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .header-text {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ffda79; /* Un color dorado/luz */
+            text-shadow: 0 0 10px rgba(255, 218, 121, 0.5);
+            padding: 0 20px;
+        }
+
+        .timer-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.6); /* Fondo negro semitransparente */
+            padding: 20px;
+            border-radius: 5px;
+            min-width: 90px;
+            border: 1px solid #ffda79;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        .number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            display: block;
+            color: #fff;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #ccc;
+        }
+
+        @media (max-width: 600px) {
+            .header-text { font-size: 1.8rem; }
+            .number { font-size: 2.5rem; }
+            .time-box { min-width: 60px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-image">
+    <div class="overlay">
+        <div class="header-text">VAMOS A VER A MORAT</div>
+
+        <div class="timer-container">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">Días</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">Horas</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Min</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Seg</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // FECHA OBJETIVO: 24/09/2026 a las 21:00 HS Hora Argentina
+    // Mes 8 es Septiembre (Enero es 0)
+    const targetDate = new Date(2026, 8, 24, 21, 0, 0).getTime();
+
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            document.querySelector(".timer-container").innerHTML = "<h1>¡HOY ES EL SHOW! 🎸</h1>";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = days;
+        document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+        document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+        document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+    }, 1000);
+</script>
+
+</body>
+</html>
